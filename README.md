@@ -33,7 +33,7 @@ Um projeto educativo interativo para crianças, focado em **Literacia Financeira
 ### Opção 2: GitHub Pages
 1. Faça fork deste repositório
 2. Ative GitHub Pages nas configurações
-3. Aceda a `https://[seu-usuario].github.io/growup-kids`
+3. Aceda a `https://[Maria-Sambe].github.io/growup-kids`
 
 ## 📁 Estrutura
 
@@ -144,3 +144,4 @@ Se tem sugestões ou melhorias, sinta-se livre para contribuir!
 ---
 
 **Desenvolvido com ❤️ para crianças aprenderem sobre finanças e convivência!**
+
