@@ -1,348 +1,126 @@
-🎓 GrowUp Kids v3.0 - Plataforma Educativa Completa
+# 🎓 GrowUp Kids - Plataforma Educativa Interativa
 
-Relatório Final de Desenvolvimento
+<div align="center">
 
-Desenvolvido por: Maria Sambé
-Data: 10 de Dezembro de 2025
-Versão: 3.0 - Plataforma Educativa Completa
+![GrowUp Kids](https://img.shields.io/badge/GrowUp%20Kids-v3.0-purple?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completo-success?style=for-the-badge)
+![Licença](https://img.shields.io/badge/Licença-Todos%20os%20Direitos%20Reservados-red?style=for-the-badge)
 
+**Uma plataforma educativa gamificada para crianças dos 5 aos 13 anos**
 
+[🚀 Experimentar Agora](https://mariasambe.github.io/growup-kids/) • [📖 Documentação](#-como-usar) • [📧 Contacto](#-contacto)
 
+</div>
 
-✅ Funcionalidades Implementadas
+---
 
-🔐 Sistema de Autenticação
+## 🌟 Sobre o Projeto
 
-•
-Ecrã de Boas-Vindas com opções "Criar Conta" e "Já tenho conta"
+O **GrowUp Kids** é uma plataforma educativa interativa que combina aprendizagem com diversão. Através de um sistema de gamificação envolvente, as crianças aprendem sobre literacia financeira, regras de convivência, português, matemática e ciências enquanto se divertem!
 
-•
-Registo Completo:
+### ✨ Características Principais
 
-•
-Nome da criança (campo de texto)
+- 🎮 **Gamificação Completa** - Moedas, XP, níveis e recompensas
+- 🌱 **Planta do Conhecimento** - Cresce à medida que a criança aprende
+- 🔐 **Sistema de Perfis** - Cada criança tem o seu próprio perfil com PIN
+- 📱 **Totalmente Responsivo** - Funciona em qualquer dispositivo
+- 🌌 **Design Surreal** - Interface 3D com partículas animadas
+- 💾 **Funciona Offline** - Após o primeiro carregamento
 
-•
-Idade (dropdown 5-13 anos)
+---
 
-•
-Seleção de avatar (6 opções)
+## 📚 Conteúdo Educativo
 
-•
-PIN de 4 dígitos para segurança
+### 25 Lições Organizadas em 5 Categorias
 
+| Categoria | Lições | Descrição |
+|-----------|--------|-----------|
+| 💰 **Literacia Financeira** | 5 | O que é dinheiro, poupar, necessidades vs desejos |
+| 🤝 **Convivência** | 5 | Respeito, partilha, verdade, ajuda, gentileza |
+| 📝 **Português** | 5 | Alfabeto, vogais, sílabas, palavras, frases |
+| 🔢 **Matemática** | 5 | Números, adição, subtração, formas, comparação |
+| 🔬 **Ciências** | 5 | Sentidos, animais, plantas, corpo humano, água |
 
+---
 
-•
-Login com múltiplos perfis guardados
+## 🔐 Sistema de Autenticação
 
-•
-Persistência de dados no localStorage
+- **Nome da Criança** - Personaliza a experiência
+- **Idade** - Adapta o conteúdo (5-13 anos)
+- **Avatar** - 6 personagens únicos para escolher
+- **PIN** - 4 dígitos para segurança
+- **Múltiplos perfis** no mesmo dispositivo
 
-📚 25 Lições Educativas Completas
+---
 
-💰 Literacia Financeira (5 lições)
+## 🏆 Sistema de Gamificação
 
-1.
-O que é dinheiro?
+| Tipo | Ganho | Descrição |
+|------|-------|-----------|
+| 💰 Moedas | +10 | Por cada lição completa |
+| ⚡ XP | +20 | Por cada lição completa |
+| 🌱 Crescimento | +1 | Planta evolui com progresso |
 
-2.
-Poupar é importante
+### 🔒 Desafios Bloqueados
+- Desbloqueiam após completar **5 lições**
+- Barra de progresso visual
 
-3.
-Necessidades vs Desejos
+---
 
-4.
-Como ganhar dinheiro
+## 🎭 Avatares Disponíveis
 
-5.
-O valor das coisas
+| Avatar | Nome | Personalidade |
+|--------|------|---------------|
+| 👧🎀 | Sofia Génio | Criativa e Curiosa |
+| 👧🌙 | Luna Sábia | Sonhadora e Inteligente |
+| 👧👓 | Iris Inteligente | Estudiosa e Dedicada |
+| 👦🎩 | Pedro Sábio | Aventureiro e Corajoso |
+| 👦⭐ | Marco Esperto | Divertido e Esperto |
+| 👦💡 | Tomás Brilhante | Inventor e Criativo |
 
-🤝 Regras de Convivência (5 lições)
+---
 
-1.
-Respeitar os outros
+## 🏫 Para Escolas
 
-2.
-Partilhar é bom
+Esta plataforma é ideal para uso escolar diário:
 
-3.
-Dizer a verdade
+✅ **Conteúdo Curricular** - Alinhado com o programa escolar  
+✅ **Progressão Estruturada** - Sistema de desbloqueio incentiva conclusão  
+✅ **Gamificação** - Mantém as crianças motivadas  
+✅ **Segurança** - Sistema de PIN para cada perfil  
+✅ **Múltiplos Perfis** - Várias crianças podem usar no mesmo dispositivo  
+✅ **Sem Internet** - Funciona offline após carregamento inicial  
 
-4.
-Ajudar os outros
+---
 
-5.
-Ser gentil
+## 🚀 Como Usar
 
-📝 Português (5 lições)
+1. Abrir a aplicação
+2. Clicar em **"Criar Conta"**
+3. Preencher nome, idade, escolher avatar e criar PIN
+4. Começar a aprender!
 
-1.
-O Alfabeto
+---
 
-2.
-Vogais e Consoantes
+## 💻 Tecnologias
 
-3.
-Sílabas Simples
+- **HTML5** / **CSS3** / **JavaScript ES6+**
+- **React 18** - Interface reativa
+- **Three.js** - Gráficos 3D
+- **LocalStorage** - Persistência de dados
 
-4.
-Palavras Simples
+---
 
-5.
-Frases Simples
+## 📜 Licença
 
-🔢 Matemática (5 lições)
+**© 2025 Maria Sambé - Todos os direitos reservados**
 
-1.
-Números 1 a 10
+---
 
-2.
-Adição Simples
+<div align="center">
 
-3.
-Subtração Simples
+**Desenvolvido com 💜 por Maria Sambé**
 
-4.
-Formas Geométricas
+*Transformando a aprendizagem numa aventura!*
 
-5.
-Maior e Menor
-
-🔬 Ciências (5 lições)
-
-1.
-Os Cinco Sentidos
-
-2.
-Animais Domésticos
-
-3.
-As Plantas
-
-4.
-O Corpo Humano
-
-5.
-A Água
-
-🔒 Sistema de Desbloqueio Progressivo
-
-•
-Desafios bloqueados por defeito
-
-•
-Desbloqueiam após completar 5 lições
-
-•
-Barra de progresso visual (0/5 lições)
-
-•
-Mensagem explicativa clara
-
-🏆 Sistema de Gamificação
-
-•
-Moedas (+10 por lição completa)
-
-•
-XP (+20 por lição completa)
-
-•
-Níveis (1-10)
-
-•
-Barra de XP visual (0-100)
-
-•
-Planta do Conhecimento que cresce com progresso
-
-🎯 Desafios Semanais (10)
-
-•
-Poupar moedas
-
-•
-Completar lições
-
-•
-Ajudar em casa
-
-•
-Ser gentil
-
-•
-E mais...
-
-🧹 Tarefas Domésticas (9)
-
-•
-Arrumar o quarto
-
-•
-Lavar a loiça
-
-•
-Ajudar a cozinhar
-
-•
-Regar as plantas
-
-•
-E mais...
-
-🎨 Design Surreal
-
-•
-8000 partículas 3D animadas com Three.js
-
-•
-Glassmorphism avançado
-
-•
-Gradientes holográficos
-
-•
-Animações fluidas
-
-•
-Totalmente responsivo
-
-©️ Créditos
-
-•
-Footer completo em todas as páginas
-
-•
-"Desenvolvido por Maria Sambé" em destaque
-
-•
-"© 2025 Maria Sambé - Todos os direitos reservados"
-
-•
-Links: Sobre | Contacto | Privacidade | Termos de Uso
-
-
-
-
-🏫 Funcionalidades para Escolas
-
-Esta plataforma foi desenhada para uso escolar diário:
-
-1.
-Conteúdo Curricular - Lições alinhadas com o programa escolar
-
-2.
-Progressão Estruturada - Sistema de desbloqueio incentiva conclusão
-
-3.
-Gamificação - Mantém as crianças motivadas
-
-4.
-Segurança - Sistema de PIN para cada perfil
-
-5.
-Múltiplos Perfis - Várias crianças podem usar no mesmo dispositivo
-
-6.
-Sem Internet - Funciona offline após carregamento inicial
-
-7.
-Relatórios Visuais - Estatísticas de progresso claras
-
-
-
-
-📊 Especificações Técnicas
-
-Aspeto
-Detalhe
-Tamanho
-~120KB
-Tecnologias
-HTML5, CSS3, JavaScript ES6+, React 18, Three.js
-Compatibilidade
-Chrome, Firefox, Safari, Edge
-Responsivo
-Sim (desktop, tablet, mobile)
-Offline
-Sim (após primeiro carregamento)
-Armazenamento
-localStorage
-
-
-
-
-
-🚀 Como Usar
-
-Para Crianças:
-
-1.
-Abrir a aplicação
-
-2.
-Clicar em "Criar Conta"
-
-3.
-Preencher nome, idade, escolher avatar e criar PIN
-
-4.
-Começar a aprender!
-
-Para Escolas:
-
-1.
-Ativar GitHub Pages no repositório
-
-2.
-Partilhar o link com os alunos
-
-3.
-Cada aluno cria o seu perfil
-
-4.
-Acompanhar progresso através das estatísticas
-
-
-
-
-🔗 Links
-
-•
-Repositório: https://github.com/MariaSambe/growup-kids
-
-•
-Aplicação (após ativar Pages ): https://mariasambe.github.io/growup-kids/
-
-
-
-
-📝 Notas de Desenvolvimento
-
-Esta aplicação foi desenvolvida com foco em:
-
-1.
-Experiência do Utilizador - Interface intuitiva para crianças
-
-2.
-Valor Educativo - Conteúdo alinhado com objetivos escolares
-
-3.
-Motivação - Gamificação para manter o interesse
-
-4.
-Segurança - Sistema de PIN e perfis separados
-
-5.
-Acessibilidade - Funciona em qualquer dispositivo
-
-6.
-Performance - Otimizada para carregar rapidamente
-
-
-
-
-Desenvolvido com 💜 por Maria Sambé
-© 2025 - Todos os direitos reservados
-
+</div>
