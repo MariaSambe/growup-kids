@@ -1,147 +1,348 @@
-# GrowUp Kids - Quiz Educativo Infantil 🎓
+🎓 GrowUp Kids v3.0 - Plataforma Educativa Completa
 
-Um projeto educativo interativo para crianças, focado em **Literacia Financeira** e **Regras de Convivência**.
+Relatório Final de Desenvolvimento
 
-## 📋 Características
+Desenvolvido por: Maria Sambé
+Data: 10 de Dezembro de 2025
+Versão: 3.0 - Plataforma Educativa Completa
 
-✨ **Interativo e Infantil:**
-- 6 avatares únicos (3 femininos, 3 masculinos) com características "geniais"
-- Interface amigável com tema ilustrado e acolhedor
-- Fundo com personagens infantis customizados
-- Animações leves e divertidas
 
-💰 **Conteúdo Educativo:**
-- 25 lições sobre Literacia Financeira
-- 25 lições sobre Regras de Convivência
-- Desafios semanais interativos
-- Sistema de pontos (GUC) e XP
-- Progressão por idade (6, 7, 8+)
 
-🎮 **Gamificação:**
-- Árvore de plantas (crescimento conforme progresso)
-- Moedas e sistema de recompensas
-- Confete e celebrações
-- Quizzes divertidos
 
-## 🚀 Como Usar
+✅ Funcionalidades Implementadas
 
-### Opção 1: Abrir Localmente
-1. Descarregue o arquivo `GrowUp_Kids.html`
-2. Abra com um navegador web (Chrome, Firefox, Safari, Edge)
-3. Comece a aprender!
+🔐 Sistema de Autenticação
 
-### Opção 2: GitHub Pages
-1. Faça fork deste repositório
-2. Ative GitHub Pages nas configurações
-3. Aceda a `https://[Maria-Sambe].github.io/growup-kids`
+•
+Ecrã de Boas-Vindas com opções "Criar Conta" e "Já tenho conta"
 
-## 📁 Estrutura
+•
+Registo Completo:
 
-```
-GrowUp_Kids.html      - Aplicação principal (single HTML file)
-README.md             - Este arquivo
-.gitignore            - Arquivo Git ignore
-```
+•
+Nome da criança (campo de texto)
 
-## 🎯 Funcionalidades Principais
+•
+Idade (dropdown 5-13 anos)
 
-### Seleção de Personagem
-- Escolha entre 6 avatares únicos
-- Filtro por sexo (feminino/masculino)
-- Nomes com significado (Génio, Sábio, Esperto, etc)
+•
+Seleção de avatar (6 opções)
 
-### Aprendizagem
-- Quiz adaptativos por idade
-- Conteúdo em português (PT)
-- Texto-para-fala com velocidade ajustada
+•
+PIN de 4 dígitos para segurança
 
-### Progressão
-- Planta virtual que cresce
-- Contador de moedas
-- Barra de XP visual
-- Desafios diários
 
-## 🛠️ Tecnologias
 
-- **HTML5** - Estrutura
-- **CSS-in-JS** - Estilos dinâmicos
-- **React** - Componentes interativos (via UMD)
-- **Babel** - Transpilação JSX no browser
-- **Framer Motion** - Animações
-- **Canvas Confetti** - Efeitos de confete
+•
+Login com múltiplos perfis guardados
 
-## 📝 Conteúdo Educativo
+•
+Persistência de dados no localStorage
 
-### Literacia Financeira
-- O que é dinheiro?
-- Guardar moedas
-- Desejos vs Necessidades
-- Planeamento de gastos
-- Comparar preços
-- E muito mais!
+📚 25 Lições Educativas Completas
 
-### Regras de Convivência
-- Cumprimentos e educação
-- Partilha e generosidade
-- Escuta ativa
-- Pedidos de desculpa
-- Respeito e diferenças
-- E muito mais!
+💰 Literacia Financeira (5 lições)
 
-## 👥 Avatares
+1.
+O que é dinheiro?
 
-### Femininos
-- 🎀 Sofia Génio (Rosa com tiara)
-- 🌙 Luna Sábia (Roxo com estrelas)
-- 👓 Iris Inteligente (Azul com óculos)
+2.
+Poupar é importante
 
-### Masculinos
-- 🎩 Pedro Sábio (Azul escuro)
-- ⭐ Marco Esperto (Azul com coroa)
-- 💡 Tomás Brilhante (Azul com raios)
+3.
+Necessidades vs Desejos
 
-## 📊 Dados Educativos
+4.
+Como ganhar dinheiro
 
-- **Lições:** 50 (25 Finanças + 25 Regras)
-- **Desafios:** 10 desafios semanais
-- **Tarefas Domésticas:** 9 tarefas interativas
-- **Idades:** 6, 7, 8+
-- **Idioma:** Português (PT)
+5.
+O valor das coisas
 
-## 🔒 Privacidade
+🤝 Regras de Convivência (5 lições)
 
-- Todos os dados são armazenados **localmente** (localStorage)
-- Sem conectividade externa obrigatória
-- Seguro para crianças
+1.
+Respeitar os outros
 
-## 📱 Compatibilidade
+2.
+Partilhar é bom
 
-- ✅ Chrome/Chromium
-- ✅ Firefox
-- ✅ Safari
-- ✅ Edge
-- ✅ Mobile (iOS/Android)
+3.
+Dizer a verdade
 
-## 🎨 Personalização
+4.
+Ajudar os outros
 
-O fundo pode ser facilmente customizado editando o SVG em `GrowUp_Kids.html` (seção `.bg-anim`).
+5.
+Ser gentil
 
-## 📄 Licença
+📝 Português (5 lições)
 
-Este projeto é educativo e comunitário. Sinta-se livre para adaptar conforme necessário.
+1.
+O Alfabeto
 
-## 👨‍💻 Desenvolvimento
+2.
+Vogais e Consoantes
 
-Para modificações avançadas:
-1. Edite o arquivo HTML
-2. Procure pela seção `<script type="text/babel">`
-3. Modifique componentes React conforme necessário
+3.
+Sílabas Simples
 
-## 💬 Feedback
+4.
+Palavras Simples
 
-Se tem sugestões ou melhorias, sinta-se livre para contribuir!
+5.
+Frases Simples
 
----
+🔢 Matemática (5 lições)
 
-**Desenvolvido com ❤️ para crianças aprenderem sobre finanças e convivência!**
+1.
+Números 1 a 10
+
+2.
+Adição Simples
+
+3.
+Subtração Simples
+
+4.
+Formas Geométricas
+
+5.
+Maior e Menor
+
+🔬 Ciências (5 lições)
+
+1.
+Os Cinco Sentidos
+
+2.
+Animais Domésticos
+
+3.
+As Plantas
+
+4.
+O Corpo Humano
+
+5.
+A Água
+
+🔒 Sistema de Desbloqueio Progressivo
+
+•
+Desafios bloqueados por defeito
+
+•
+Desbloqueiam após completar 5 lições
+
+•
+Barra de progresso visual (0/5 lições)
+
+•
+Mensagem explicativa clara
+
+🏆 Sistema de Gamificação
+
+•
+Moedas (+10 por lição completa)
+
+•
+XP (+20 por lição completa)
+
+•
+Níveis (1-10)
+
+•
+Barra de XP visual (0-100)
+
+•
+Planta do Conhecimento que cresce com progresso
+
+🎯 Desafios Semanais (10)
+
+•
+Poupar moedas
+
+•
+Completar lições
+
+•
+Ajudar em casa
+
+•
+Ser gentil
+
+•
+E mais...
+
+🧹 Tarefas Domésticas (9)
+
+•
+Arrumar o quarto
+
+•
+Lavar a loiça
+
+•
+Ajudar a cozinhar
+
+•
+Regar as plantas
+
+•
+E mais...
+
+🎨 Design Surreal
+
+•
+8000 partículas 3D animadas com Three.js
+
+•
+Glassmorphism avançado
+
+•
+Gradientes holográficos
+
+•
+Animações fluidas
+
+•
+Totalmente responsivo
+
+©️ Créditos
+
+•
+Footer completo em todas as páginas
+
+•
+"Desenvolvido por Maria Sambé" em destaque
+
+•
+"© 2025 Maria Sambé - Todos os direitos reservados"
+
+•
+Links: Sobre | Contacto | Privacidade | Termos de Uso
+
+
+
+
+🏫 Funcionalidades para Escolas
+
+Esta plataforma foi desenhada para uso escolar diário:
+
+1.
+Conteúdo Curricular - Lições alinhadas com o programa escolar
+
+2.
+Progressão Estruturada - Sistema de desbloqueio incentiva conclusão
+
+3.
+Gamificação - Mantém as crianças motivadas
+
+4.
+Segurança - Sistema de PIN para cada perfil
+
+5.
+Múltiplos Perfis - Várias crianças podem usar no mesmo dispositivo
+
+6.
+Sem Internet - Funciona offline após carregamento inicial
+
+7.
+Relatórios Visuais - Estatísticas de progresso claras
+
+
+
+
+📊 Especificações Técnicas
+
+Aspeto
+Detalhe
+Tamanho
+~120KB
+Tecnologias
+HTML5, CSS3, JavaScript ES6+, React 18, Three.js
+Compatibilidade
+Chrome, Firefox, Safari, Edge
+Responsivo
+Sim (desktop, tablet, mobile)
+Offline
+Sim (após primeiro carregamento)
+Armazenamento
+localStorage
+
+
+
+
+
+🚀 Como Usar
+
+Para Crianças:
+
+1.
+Abrir a aplicação
+
+2.
+Clicar em "Criar Conta"
+
+3.
+Preencher nome, idade, escolher avatar e criar PIN
+
+4.
+Começar a aprender!
+
+Para Escolas:
+
+1.
+Ativar GitHub Pages no repositório
+
+2.
+Partilhar o link com os alunos
+
+3.
+Cada aluno cria o seu perfil
+
+4.
+Acompanhar progresso através das estatísticas
+
+
+
+
+🔗 Links
+
+•
+Repositório: https://github.com/MariaSambe/growup-kids
+
+•
+Aplicação (após ativar Pages ): https://mariasambe.github.io/growup-kids/
+
+
+
+
+📝 Notas de Desenvolvimento
+
+Esta aplicação foi desenvolvida com foco em:
+
+1.
+Experiência do Utilizador - Interface intuitiva para crianças
+
+2.
+Valor Educativo - Conteúdo alinhado com objetivos escolares
+
+3.
+Motivação - Gamificação para manter o interesse
+
+4.
+Segurança - Sistema de PIN e perfis separados
+
+5.
+Acessibilidade - Funciona em qualquer dispositivo
+
+6.
+Performance - Otimizada para carregar rapidamente
+
+
+
+
+Desenvolvido com 💜 por Maria Sambé
+© 2025 - Todos os direitos reservados
 
