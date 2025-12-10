@@ -2,17 +2,26 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrowUp Kids - Quiz Educativo Infantil 🎓</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GrowUp Kids - Aventura Cósmica Interativa 🌌</title>
     
-    <!-- React e dependências via CDN -->
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.js"></script>
+    
+    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -20,427 +29,771 @@
         }
         
         body {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
+            background: #000;
+            cursor: none;
+            position: relative;
         }
         
-        /* Fundo animado com personagens infantis */
-        .bg-anim {
+        /* Canvas 3D */
+        #three-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.1;
+        }
+        
+        /* Cursor mágico ultra avançado */
+        #custom-cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            mix-blend-mode: difference;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+        }
+        
+        #custom-cursor::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        #custom-cursor.hover {
+            width: 60px;
+            height: 60px;
+            border-width: 2px;
+            animation: pulse-cursor 1s infinite;
+        }
+        
+        @keyframes pulse-cursor {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+        
+        /* Cursor trail */
+        .cursor-trail {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fade-trail 0.8s ease-out forwards;
+        }
+        
+        @keyframes fade-trail {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        /* Root container */
+        #root {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        /* Glass morphism ULTRA */
+        .glass-ultra {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            box-shadow: 
+                0 8px 32px 0 rgba(0, 0, 0, 0.5),
+                inset 0 0 40px rgba(255, 255, 255, 0.05),
+                0 0 80px rgba(138, 43, 226, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-ultra::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                transparent 50%);
+            animation: rotate-glow 20s linear infinite;
+        }
+        
+        @keyframes rotate-glow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Título MEGA holográfico */
+        .mega-holo-title {
+            font-size: clamp(2.5em, 8vw, 5em);
+            font-weight: 900;
+            text-align: center;
+            background: linear-gradient(
+                45deg,
+                #ff0080, #ff8c00, #40e0d0, #ff0080, #7b68ee, #ff1493
+            );
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: mega-holo 4s ease infinite;
+            text-shadow: 
+                0 0 40px rgba(255, 0, 128, 0.5),
+                0 0 80px rgba(64, 224, 208, 0.3);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+            position: relative;
+            z-index: 2;
+            letter-spacing: 3px;
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes mega-holo {
+            0%, 100% { 
+                background-position: 0% 50%;
+                transform: perspective(1000px) rotateX(0deg);
+            }
+            25% {
+                background-position: 50% 100%;
+                transform: perspective(1000px) rotateX(5deg);
+            }
+            50% { 
+                background-position: 100% 50%;
+                transform: perspective(1000px) rotateX(0deg);
+            }
+            75% {
+                background-position: 50% 0%;
+                transform: perspective(1000px) rotateX(-5deg);
+            }
+        }
+        
+        /* Botão ULTRA líquido */
+        .ultra-liquid-btn {
+            position: relative;
+            padding: 25px 60px;
+            font-size: clamp(1.1em, 2.5vw, 1.5em);
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 15px 40px rgba(102, 126, 234, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.1);
+            animation: gradient-shift 3s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .ultra-liquid-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .ultra-liquid-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .ultra-liquid-btn:hover {
+            transform: scale(1.08) translateY(-8px) rotateZ(-2deg);
+            box-shadow: 
+                0 20px 60px rgba(102, 126, 234, 0.6),
+                inset 0 0 40px rgba(255, 255, 255, 0.2),
+                0 0 100px rgba(138, 43, 226, 0.4);
+        }
+        
+        .ultra-liquid-btn:active {
+            transform: scale(0.95) translateY(-2px);
+        }
+        
+        .ultra-liquid-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Avatar card 3D EXTREMO */
+        .avatar-3d-extreme {
+            perspective: 1500px;
+            width: clamp(180px, 20vw, 240px);
+            height: clamp(260px, 30vw, 340px);
+            margin: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .avatar-3d-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        
+        .avatar-3d-extreme:hover .avatar-3d-inner {
+            transform: rotateY(15deg) rotateX(10deg) translateZ(30px) scale(1.08);
+        }
+        
+        .avatar-3d-extreme.selected .avatar-3d-inner {
+            animation: selected-pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes selected-pulse {
+            0%, 100% {
+                transform: rotateY(0deg) scale(1);
+            }
+            50% {
+                transform: rotateY(10deg) scale(1.05);
+            }
+        }
+        
+        .avatar-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 30px;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 25px 70px rgba(0, 0, 0, 0.6),
+                inset 0 0 40px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .avatar-face::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 255, 255, 0.15) 90deg,
+                transparent 180deg
+            );
+            animation: rotate-shimmer 6s linear infinite;
+        }
+        
+        @keyframes rotate-shimmer {
+            to { transform: rotate(360deg); }
+        }
+        
+        .avatar-icon-mega {
+            font-size: clamp(4em, 8vw, 6em);
+            margin-bottom: 20px;
+            animation: float-bounce 3s ease-in-out infinite;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .avatar-3d-extreme:hover .avatar-icon-mega {
+            transform: scale(1.15) rotateZ(5deg);
+            filter: drop-shadow(0 20px 40px rgba(138, 43, 226, 0.8));
+        }
+        
+        @keyframes float-bounce {
+            0%, 100% { 
+                transform: translateY(0) rotateZ(0deg); 
+            }
+            25% {
+                transform: translateY(-20px) rotateZ(-5deg);
+            }
+            50% { 
+                transform: translateY(-10px) rotateZ(0deg); 
+            }
+            75% {
+                transform: translateY(-20px) rotateZ(5deg);
+            }
+        }
+        
+        .avatar-name-glow {
+            font-size: clamp(1.2em, 2.5vw, 1.6em);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(138, 43, 226, 0.6);
+            position: relative;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+        
+        .avatar-trait-text {
+            font-size: clamp(0.9em, 1.8vw, 1.1em);
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            font-weight: 300;
+        }
+        
+        .avatar-3d-extreme.selected .avatar-face {
+            background: linear-gradient(135deg,
+                rgba(138, 43, 226, 0.4) 0%,
+                rgba(102, 126, 234, 0.4) 100%);
+            border-color: rgba(138, 43, 226, 1);
+            border-width: 4px;
+            box-shadow: 
+                0 30px 80px rgba(138, 43, 226, 0.7),
+                inset 0 0 60px rgba(138, 43, 226, 0.3),
+                0 0 120px rgba(138, 43, 226, 0.5);
+        }
+        
+        /* Grid fluido */
+        .fluid-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Texto com super glow */
+        .super-glow-text {
+            color: #fff;
+            text-shadow: 
+                0 0 15px rgba(255, 255, 255, 1),
+                0 0 30px rgba(138, 43, 226, 0.8),
+                0 0 45px rgba(138, 43, 226, 0.6),
+                0 0 60px rgba(138, 43, 226, 0.4);
+            font-size: clamp(1.2em, 2.5vw, 1.8em);
+            text-align: center;
+            margin: 30px 0;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Filtros neon */
+        .neon-filters {
+            display: flex;
+            gap: 25px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .neon-btn {
+            padding: 18px 40px;
+            font-size: clamp(1em, 2vw, 1.2em);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+        
+        .neon-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .neon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+        }
+        
+        .neon-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #764ba2;
+            color: #fff;
+            box-shadow: 
+                0 15px 40px rgba(102, 126, 234, 0.6),
+                0 0 60px rgba(138, 43, 226, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .neon-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Loading épico */
+        .epic-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a0033, #000);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+        
+        .epic-loading.fade-out {
+            opacity: 0;
+            transform: scale(1.2);
             pointer-events: none;
         }
         
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        .spinner-epic {
+            width: 120px;
+            height: 120px;
+            border: 6px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #667eea;
+            border-right-color: #764ba2;
+            border-bottom-color: #f093fb;
+            border-radius: 50%;
+            animation: spin-epic 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            box-shadow: 
+                0 0 40px rgba(102, 126, 234, 0.6),
+                inset 0 0 40px rgba(138, 43, 226, 0.3);
         }
         
-        .header {
-            text-align: center;
-            color: white;
-            padding: 20px;
-            margin-bottom: 30px;
+        @keyframes spin-epic {
+            to { transform: rotate(360deg); }
         }
         
-        .header h1 {
-            font-size: 3em;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
-        }
-        
-        .avatar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .avatar-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-        }
-        
-        .avatar-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        
-        .avatar-card.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .avatar-icon {
-            font-size: 4em;
-            margin-bottom: 10px;
-        }
-        
-        .avatar-name {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .avatar-trait {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-        
-        .filter-buttons {
+        /* Container centralizado */
+        .center-flex {
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #f5f7fa;
-            color: #333;
-        }
-        
-        .btn-secondary:hover {
-            background: #e1e8ed;
-        }
-        
-        .btn-secondary.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-        
-        .stats-panel {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            margin-bottom: 10px;
-            background: #f5f7fa;
-            border-radius: 15px;
-        }
-        
-        .stat-label {
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        
-        .stat-value {
-            font-size: 1.3em;
-            color: #667eea;
-        }
-        
-        .plant-container {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(to bottom, #87CEEB 0%, #90EE90 100%);
-            border-radius: 20px;
-            margin: 20px 0;
-        }
-        
-        .plant {
-            font-size: 6em;
-            margin: 20px 0;
-        }
-        
-        .xp-bar {
-            width: 100%;
-            height: 30px;
-            background: #e1e8ed;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        
-        .xp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.5s ease;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
+            min-height: 100vh;
+            padding: 50px 20px;
         }
         
-        .lesson-list {
-            display: grid;
-            gap: 15px;
+        /* Scrollbar customizada */
+        #root::-webkit-scrollbar {
+            width: 12px;
         }
         
-        .lesson-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 5px solid #667eea;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        #root::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
         }
         
-        .lesson-card:hover {
-            transform: translateX(10px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        #root::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.8);
         }
         
-        .lesson-card.completed {
-            border-left-color: #4CAF50;
-            opacity: 0.7;
+        #root::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #764ba2, #f093fb);
         }
         
-        .lesson-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        
-        .lesson-description {
-            color: #666;
-            font-size: 0.95em;
-        }
-        
-        .lesson-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            margin-top: 10px;
-        }
-        
-        .badge-finance {
-            background: #FFD700;
-            color: #333;
-        }
-        
-        .badge-social {
-            background: #87CEEB;
-            color: #333;
-        }
-        
-        .badge-age {
-            background: #FFA07A;
-            color: white;
-        }
-        
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .question-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .question-text {
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            color: #333;
-            text-align: center;
-        }
-        
-        .answers-grid {
-            display: grid;
-            gap: 15px;
-        }
-        
-        .answer-btn {
-            padding: 20px;
-            border: 3px solid #e1e8ed;
-            border-radius: 15px;
-            background: white;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-        
-        .answer-btn:hover {
-            border-color: #667eea;
-            background: #f5f7fa;
-            transform: translateX(5px);
-        }
-        
-        .answer-btn.correct {
-            border-color: #4CAF50;
-            background: #E8F5E9;
-        }
-        
-        .answer-btn.incorrect {
-            border-color: #f44336;
-            background: #FFEBEE;
-        }
-        
-        .feedback-message {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 1.2em;
-            text-align: center;
-        }
-        
-        .feedback-correct {
-            background: #E8F5E9;
-            color: #2E7D32;
-        }
-        
-        .feedback-incorrect {
-            background: #FFEBEE;
-            color: #C62828;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .nav-btn {
-            flex: 1;
-            min-width: 150px;
-        }
-        
-        .challenge-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .challenge-card {
-            background: linear-gradient(135deg, #FFA07A 0%, #FF6347 100%);
-            color: white;
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .challenge-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 99, 71, 0.3);
-        }
-        
-        .challenge-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-        
-        .challenge-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .tts-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
+        /* Responsivo */
         @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
+            .mega-holo-title {
+                font-size: 2.5em;
             }
             
-            .header h1 {
-                font-size: 2em;
+            .avatar-3d-extreme {
+                width: 160px;
+                height: 240px;
             }
             
-            .avatar-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .ultra-liquid-btn {
+                padding: 20px 45px;
+                font-size: 1.1em;
             }
+            
+            body {
+                cursor: auto;
+            }
+            
+            #custom-cursor {
+                display: none;
+            }
+        }
+        
+        /* Efeito de partículas ao redor dos avatares */
+        .particle-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .avatar-3d-extreme:hover .particle-ring {
+            opacity: 1;
+        }
+        
+        .particle-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fff, rgba(138, 43, 226, 0.5));
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: orbit 3s linear infinite;
+        }
+        
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Fundo animado -->
-    <svg class="bg-anim" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
-        <circle cx="100" cy="100" r="50" fill="rgba(255,255,255,0.3)"/>
-        <circle cx="300" cy="200" r="30" fill="rgba(255,255,255,0.2)"/>
-        <circle cx="500" cy="150" r="40" fill="rgba(255,255,255,0.25)"/>
-        <circle cx="700" cy="250" r="35" fill="rgba(255,255,255,0.2)"/>
-        <circle cx="900" cy="100" r="45" fill="rgba(255,255,255,0.3)"/>
-        <circle cx="1100" cy="200" r="30" fill="rgba(255,255,255,0.2)"/>
-        <circle cx="200" cy="400" r="40" fill="rgba(255,255,255,0.25)"/>
-        <circle cx="400" cy="500" r="35" fill="rgba(255,255,255,0.2)"/>
-        <circle cx="600" cy="450" r="50" fill="rgba(255,255,255,0.3)"/>
-        <circle cx="800" cy="550" r="30" fill="rgba(255,255,255,0.2)"/>
-        <circle cx="1000" cy="500" r="40" fill="rgba(255,255,255,0.25)"/>
-    </svg>
+    <!-- Canvas Three.js -->
+    <canvas id="three-canvas"></canvas>
     
+    <!-- Cursor customizado -->
+    <div id="custom-cursor"></div>
+    
+    <!-- Loading screen -->
+    <div class="epic-loading" id="epic-loading">
+        <div class="spinner-epic"></div>
+        <p class="super-glow-text" style="margin-top: 40px;">✨ Preparando experiência cósmica...</p>
+    </div>
+    
+    <!-- Container React -->
     <div id="root"></div>
+    
+    <script>
+        // ===== THREE.JS - Sistema de partículas 3D avançado =====
+        let scene, camera, renderer, particleSystem, mouse, mouseTarget;
+        let clock = new THREE.Clock();
+        
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('three-canvas'),
+                alpha: true,
+                antialias: true
+            });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+            
+            // Sistema de partículas melhorado
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 8000;
+            const posArray = new Float32Array(particlesCount * 3);
+            const colorsArray = new Float32Array(particlesCount * 3);
+            const sizesArray = new Float32Array(particlesCount);
+            
+            for(let i = 0; i < particlesCount * 3; i += 3) {
+                // Distribuição esférica
+                const radius = Math.random() * 50 + 10;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.random() * Math.PI;
+                
+                posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+                posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                posArray[i + 2] = radius * Math.cos(phi);
+                
+                // Cores variadas (roxo, azul, ciano, rosa)
+                const colorChoice = Math.random();
+                if(colorChoice < 0.25) {
+                    colorsArray[i] = 0.4; colorsArray[i + 1] = 0.2; colorsArray[i + 2] = 0.9;
+                } else if(colorChoice < 0.5) {
+                    colorsArray[i] = 0.2; colorsArray[i + 1] = 0.8; colorsArray[i + 2] = 0.9;
+                } else if(colorChoice < 0.75) {
+                    colorsArray[i] = 0.9; colorsArray[i + 1] = 0.2; colorsArray[i + 2] = 0.9;
+                } else {
+                    colorsArray[i] = 1; colorsArray[i + 1] = 0.4; colorsArray[i + 2] = 0.8;
+                }
+                
+                sizesArray[i / 3] = Math.random() * 0.3 + 0.1;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+            particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizesArray, 1));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.2,
+                sizeAttenuation: true,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending
+            });
+            
+            particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particleSystem);
+            
+            // Mouse tracking
+            mouse = { x: 0, y: 0 };
+            mouseTarget = { x: 0, y: 0 };
+            
+            animate();
+            
+            // Remover loading
+            setTimeout(() => {
+                document.getElementById('epic-loading').classList.add('fade-out');
+            }, 2500);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const elapsedTime = clock.getElapsedTime();
+            
+            // Rotação orgânica
+            particleSystem.rotation.x = Math.sin(elapsedTime * 0.1) * 0.2;
+            particleSystem.rotation.y = elapsedTime * 0.05;
+            particleSystem.rotation.z = Math.cos(elapsedTime * 0.1) * 0.1;
+            
+            // Lerp suave do mouse
+            mouseTarget.x += (mouse.x - mouseTarget.x) * 0.05;
+            mouseTarget.y += (mouse.y - mouseTarget.y) * 0.05;
+            
+            particleSystem.rotation.x += mouseTarget.y * 0.0001;
+            particleSystem.rotation.y += mouseTarget.x * 0.0001;
+            
+            renderer.render(scene, camera);
+        }
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        initThreeJS();
+        
+        // ===== CURSOR CUSTOMIZADO COM TRAIL =====
+        const cursor = document.getElementById('custom-cursor');
+        let cursorX = 0, cursorY = 0;
+        let cursorTargetX = 0, cursorTargetY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            cursorTargetX = e.clientX;
+            cursorTargetY = e.clientY;
+            
+            // Criar trail
+            if(Math.random() > 0.7) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+                
+                setTimeout(() => trail.remove(), 800);
+            }
+        });
+        
+        function updateCursor() {
+            cursorX += (cursorTargetX - cursorX) * 0.2;
+            cursorY += (cursorTargetY - cursorY) * 0.2;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+        
+        // Hover effect
+        document.addEventListener('mouseover', (e) => {
+            if(e.target.tagName === 'BUTTON' || 
+               e.target.classList.contains('avatar-3d-extreme') ||
+               e.target.closest('.avatar-3d-extreme')) {
+                cursor.classList.add('hover');
+            }
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            if(e.target.tagName === 'BUTTON' || 
+               e.target.classList.contains('avatar-3d-extreme') ||
+               e.target.closest('.avatar-3d-extreme')) {
+                cursor.classList.remove('hover');
+            }
+        });
+    </script>
     
     <script type="text/babel">
         const { useState, useEffect } = React;
-        const { motion } = Motion;
         
         // Dados dos avatares
         const AVATARS = [
@@ -452,456 +805,156 @@
             { id: 6, name: 'Tomás Brilhante', icon: '👦💡', gender: 'male', trait: 'Genial e Inovador', color: '#00BFFF' }
         ];
         
-        // Lições de Literacia Financeira
-        const FINANCE_LESSONS = [
-            { id: 1, title: 'O que é dinheiro?', description: 'Aprende o que é dinheiro e para que serve', age: 6, questions: [
-                { q: 'O dinheiro serve para...', answers: ['Comprar coisas', 'Brincar', 'Comer', 'Dormir'], correct: 0 },
-                { q: 'Onde guardamos o dinheiro?', answers: ['No chão', 'No mealheiro', 'No lixo', 'Na rua'], correct: 1 }
-            ]},
-            { id: 2, title: 'Guardar moedas', description: 'A importância de poupar dinheiro', age: 6, questions: [
-                { q: 'Porque devemos guardar dinheiro?', answers: ['Para comprar depois', 'Para perder', 'Para dar', 'Para esconder'], correct: 0 },
-                { q: 'Onde é seguro guardar moedas?', answers: ['No bolso', 'No mealheiro', 'Na mochila', 'No chão'], correct: 1 }
-            ]},
-            { id: 3, title: 'Desejos vs Necessidades', description: 'Diferença entre o que queremos e precisamos', age: 7, questions: [
-                { q: 'O que é uma necessidade?', answers: ['Um brinquedo novo', 'Comida', 'Doces', 'Jogos'], correct: 1 },
-                { q: 'O que é um desejo?', answers: ['Água', 'Roupa', 'Um tablet novo', 'Casa'], correct: 2 }
-            ]},
-            { id: 4, title: 'Planeamento de gastos', description: 'Como planear o que vamos comprar', age: 7, questions: [
-                { q: 'Antes de comprar devemos...', answers: ['Pensar se precisamos', 'Comprar tudo', 'Gastar tudo', 'Não pensar'], correct: 0 }
-            ]},
-            { id: 5, title: 'Comparar preços', description: 'Aprende a comparar preços antes de comprar', age: 8, questions: [
-                { q: 'Se um brinquedo custa 5€ numa loja e 3€ noutra, onde é mais barato?', answers: ['Na primeira', 'Na segunda', 'É igual', 'Não sei'], correct: 1 }
-            ]},
-            { id: 6, title: 'Ganhar dinheiro', description: 'Como as pessoas ganham dinheiro', age: 6, questions: [
-                { q: 'As pessoas ganham dinheiro quando...', answers: ['Trabalham', 'Dormem', 'Brincam', 'Comem'], correct: 0 }
-            ]},
-            { id: 7, title: 'Fazer escolhas', description: 'Aprende a fazer boas escolhas com dinheiro', age: 7, questions: [
-                { q: 'Se tens 5€, podes comprar...', answers: ['Tudo o que quiseres', 'Coisas até 5€', 'Coisas de 10€', 'Nada'], correct: 1 }
-            ]},
-            { id: 8, title: 'O valor das coisas', description: 'Entender que as coisas têm valores diferentes', age: 7, questions: [
-                { q: 'O que custa mais?', answers: ['Um lápis', 'Uma bicicleta', 'Uma borracha', 'Um caderno'], correct: 1 }
-            ]},
-            { id: 9, title: 'Partilhar recursos', description: 'A importância de partilhar', age: 6, questions: [
-                { q: 'Partilhar é...', answers: ['Bom', 'Mau', 'Feio', 'Triste'], correct: 0 }
-            ]},
-            { id: 10, title: 'Cuidar das coisas', description: 'Cuidar bem das nossas coisas', age: 6, questions: [
-                { q: 'Devemos cuidar dos nossos brinquedos porque...', answers: ['Duram mais tempo', 'Ficam feios', 'Não interessa', 'Para estragar'], correct: 0 }
-            ]},
-            { id: 11, title: 'Trocar e partilhar', description: 'Trocar brinquedos com amigos', age: 7, questions: [
-                { q: 'Trocar brinquedos com amigos é...', answers: ['Divertido', 'Errado', 'Feio', 'Mau'], correct: 0 }
-            ]},
-            { id: 12, title: 'Presentes e dinheiro', description: 'Quando recebemos dinheiro de presente', age: 7, questions: [
-                { q: 'Se recebes dinheiro de presente, deves...', answers: ['Gastar tudo já', 'Pensar bem', 'Perder', 'Dar'], correct: 1 }
-            ]},
-            { id: 13, title: 'Objetivos de poupança', description: 'Poupar para algo especial', age: 8, questions: [
-                { q: 'Poupar dinheiro ajuda a...', answers: ['Comprar algo maior depois', 'Perder dinheiro', 'Ficar triste', 'Não fazer nada'], correct: 0 }
-            ]},
-            { id: 14, title: 'Mesada', description: 'O que é uma mesada', age: 8, questions: [
-                { q: 'Uma mesada é...', answers: ['Dinheiro regular', 'Um brinquedo', 'Uma comida', 'Um jogo'], correct: 0 }
-            ]},
-            { id: 15, title: 'Publicidade', description: 'Entender anúncios na TV', age: 8, questions: [
-                { q: 'Os anúncios querem que...', answers: ['Compremos coisas', 'Estudemos', 'Durmamos', 'Corramos'], correct: 0 }
-            ]},
-            { id: 16, title: 'Dinheiro não cresce em árvores', description: 'O dinheiro tem de ser ganho', age: 7, questions: [
-                { q: 'Para ter dinheiro é preciso...', answers: ['Trabalhar', 'Dormir', 'Brincar', 'Ver TV'], correct: 0 }
-            ]},
-            { id: 17, title: 'Ser grato', description: 'Agradecer o que temos', age: 6, questions: [
-                { q: 'Devemos ser gratos porque...', answers: ['Temos muitas coisas boas', 'Não temos nada', 'É feio', 'É mau'], correct: 0 }
-            ]},
-            { id: 18, title: 'Ajudar em casa', description: 'Tarefas domésticas', age: 7, questions: [
-                { q: 'Ajudar em casa é...', answers: ['Importante', 'Mau', 'Feio', 'Errado'], correct: 0 }
-            ]},
-            { id: 19, title: 'Compras inteligentes', description: 'Fazer compras pensadas', age: 8, questions: [
-                { q: 'Antes de comprar devemos...', answers: ['Fazer uma lista', 'Comprar tudo', 'Não pensar', 'Gastar tudo'], correct: 0 }
-            ]},
-            { id: 20, title: 'Dinheiro emprestado', description: 'Emprestar e devolver', age: 8, questions: [
-                { q: 'Se emprestas algo deves...', answers: ['Devolver', 'Ficar com ele', 'Perder', 'Estragar'], correct: 0 }
-            ]},
-            { id: 21, title: 'Contar dinheiro', description: 'Aprende a contar moedas', age: 6, questions: [
-                { q: 'Duas moedas de 1€ fazem...', answers: ['1€', '2€', '3€', '4€'], correct: 1 }
-            ]},
-            { id: 22, title: 'Dinheiro digital', description: 'Cartões e pagamentos digitais', age: 8, questions: [
-                { q: 'Os cartões também são...', answers: ['Dinheiro', 'Brinquedos', 'Comida', 'Jogos'], correct: 0 }
-            ]},
-            { id: 23, title: 'Ser responsável', description: 'Responsabilidade com dinheiro', age: 8, questions: [
-                { q: 'Ser responsável com dinheiro significa...', answers: ['Cuidar bem dele', 'Perder', 'Gastar tudo', 'Não ligar'], correct: 0 }
-            ]},
-            { id: 24, title: 'Doar e ajudar', description: 'Ajudar quem precisa', age: 7, questions: [
-                { q: 'Ajudar quem precisa é...', answers: ['Bonito', 'Feio', 'Mau', 'Errado'], correct: 0 }
-            ]},
-            { id: 25, title: 'O futuro e poupança', description: 'Poupar para o futuro', age: 8, questions: [
-                { q: 'Poupar ajuda no...', answers: ['Futuro', 'Passado', 'Nunca', 'Nada'], correct: 0 }
-            ]}
-        ];
-        
-        // Lições de Regras de Convivência
-        const SOCIAL_LESSONS = [
-            { id: 26, title: 'Cumprimentos', description: 'Dizer olá e bom dia', age: 6, questions: [
-                { q: 'Quando encontras alguém deves...', answers: ['Cumprimentar', 'Ignorar', 'Fugir', 'Gritar'], correct: 0 }
-            ]},
-            { id: 27, title: 'Por favor e obrigado', description: 'Palavras mágicas', age: 6, questions: [
-                { q: 'Quando pedimos algo dizemos...', answers: ['Por favor', 'Dá-me', 'Quero', 'Agora'], correct: 0 }
-            ]},
-            { id: 28, title: 'Partilhar brinquedos', description: 'Partilhar com amigos', age: 6, questions: [
-                { q: 'Partilhar brinquedos é...', answers: ['Bom', 'Mau', 'Feio', 'Errado'], correct: 0 }
-            ]},
-            { id: 29, title: 'Escutar os outros', description: 'Ouvir quando alguém fala', age: 7, questions: [
-                { q: 'Quando alguém fala devemos...', answers: ['Escutar', 'Interromper', 'Gritar', 'Sair'], correct: 0 }
-            ]},
-            { id: 30, title: 'Pedir desculpa', description: 'Quando erramos', age: 6, questions: [
-                { q: 'Quando fazemos algo errado devemos...', answers: ['Pedir desculpa', 'Fugir', 'Mentir', 'Ignorar'], correct: 0 }
-            ]},
-            { id: 31, title: 'Respeitar diferenças', description: 'Todos somos diferentes', age: 7, questions: [
-                { q: 'As pessoas são...', answers: ['Todas diferentes', 'Todas iguais', 'Más', 'Feias'], correct: 0 }
-            ]},
-            { id: 32, title: 'Não bater', description: 'Resolver problemas sem violência', age: 6, questions: [
-                { q: 'Quando estamos chateados devemos...', answers: ['Conversar', 'Bater', 'Gritar', 'Fugir'], correct: 0 }
-            ]},
-            { id: 33, title: 'Esperar a vez', description: 'Ter paciência', age: 6, questions: [
-                { q: 'Numa fila devemos...', answers: ['Esperar a nossa vez', 'Furar', 'Empurrar', 'Gritar'], correct: 0 }
-            ]},
-            { id: 34, title: 'Ajudar os outros', description: 'Ser prestável', age: 7, questions: [
-                { q: 'Ajudar os outros é...', answers: ['Bom', 'Mau', 'Feio', 'Errado'], correct: 0 }
-            ]},
-            { id: 35, title: 'Não mentir', description: 'Dizer sempre a verdade', age: 7, questions: [
-                { q: 'Devemos sempre...', answers: ['Dizer a verdade', 'Mentir', 'Enganar', 'Esconder'], correct: 0 }
-            ]},
-            { id: 36, title: 'Cuidar do ambiente', description: 'Não deitar lixo no chão', age: 7, questions: [
-                { q: 'O lixo vai para...', answers: ['O caixote', 'O chão', 'A rua', 'O mar'], correct: 0 }
-            ]},
-            { id: 37, title: 'Ser amigo', description: 'Como ser um bom amigo', age: 6, questions: [
-                { q: 'Um bom amigo é...', answers: ['Simpático', 'Mau', 'Chato', 'Triste'], correct: 0 }
-            ]},
-            { id: 38, title: 'Respeitar os mais velhos', description: 'Respeito pelos adultos', age: 7, questions: [
-                { q: 'Devemos respeitar os adultos porque...', answers: ['Têm mais experiência', 'São chatos', 'São maus', 'Não sabem nada'], correct: 0 }
-            ]},
-            { id: 39, title: 'Não gritar', description: 'Falar num tom adequado', age: 6, questions: [
-                { q: 'Dentro de casa devemos...', answers: ['Falar baixo', 'Gritar', 'Berrar', 'Fazer barulho'], correct: 0 }
-            ]},
-            { id: 40, title: 'Arrumar os brinquedos', description: 'Manter tudo organizado', age: 6, questions: [
-                { q: 'Depois de brincar devemos...', answers: ['Arrumar', 'Deixar tudo', 'Bagunçar mais', 'Sair'], correct: 0 }
-            ]},
-            { id: 41, title: 'Ser educado à mesa', description: 'Boas maneiras ao comer', age: 7, questions: [
-                { q: 'À mesa devemos...', answers: ['Comer com educação', 'Falar de boca cheia', 'Sujar tudo', 'Brincar'], correct: 0 }
-            ]},
-            { id: 42, title: 'Não interromper', description: 'Esperar para falar', age: 7, questions: [
-                { q: 'Quando alguém está a falar devemos...', answers: ['Esperar', 'Interromper', 'Gritar', 'Sair'], correct: 0 }
-            ]},
-            { id: 43, title: 'Ser gentil', description: 'Tratar bem os outros', age: 6, questions: [
-                { q: 'Devemos ser...', answers: ['Gentis', 'Maus', 'Chatos', 'Tristes'], correct: 0 }
-            ]},
-            { id: 44, title: 'Cuidar dos animais', description: 'Respeitar os animais', age: 7, questions: [
-                { q: 'Os animais merecem...', answers: ['Respeito', 'Maus tratos', 'Violência', 'Nada'], correct: 0 }
-            ]},
-            { id: 45, title: 'Não pegar sem pedir', description: 'Pedir antes de usar', age: 6, questions: [
-                { q: 'Antes de pegar em algo de outra pessoa devemos...', answers: ['Pedir', 'Pegar', 'Esconder', 'Fugir'], correct: 0 }
-            ]},
-            { id: 46, title: 'Aceitar um não', description: 'Nem sempre podemos ter tudo', age: 7, questions: [
-                { q: 'Quando nos dizem não devemos...', answers: ['Aceitar', 'Birra', 'Gritar', 'Chorar'], correct: 0 }
-            ]},
-            { id: 47, title: 'Ser paciente', description: 'Ter calma', age: 7, questions: [
-                { q: 'Paciência é...', answers: ['Importante', 'Má', 'Feia', 'Errada'], correct: 0 }
-            ]},
-            { id: 48, title: 'Cumprimentar ao entrar', description: 'Dizer olá ao chegar', age: 6, questions: [
-                { q: 'Ao entrar num sítio devemos...', answers: ['Cumprimentar', 'Ignorar todos', 'Gritar', 'Sair'], correct: 0 }
-            ]},
-            { id: 49, title: 'Agradecer sempre', description: 'Dizer obrigado', age: 6, questions: [
-                { q: 'Quando alguém nos ajuda dizemos...', answers: ['Obrigado', 'Nada', 'Vai-te embora', 'Não quero'], correct: 0 }
-            ]},
-            { id: 50, title: 'Ser responsável', description: 'Cumprir o que prometemos', age: 8, questions: [
-                { q: 'Quando prometemos algo devemos...', answers: ['Cumprir', 'Esquecer', 'Mentir', 'Ignorar'], correct: 0 }
-            ]}
-        ];
-        
-        // Desafios semanais
-        const CHALLENGES = [
-            { id: 1, title: 'Guardar 5 moedas', icon: '💰', description: 'Poupa 5 moedas esta semana', reward: 50 },
-            { id: 2, title: 'Ajudar em casa 3 vezes', icon: '🏠', description: 'Ajuda nas tarefas domésticas', reward: 40 },
-            { id: 3, title: 'Partilhar um brinquedo', icon: '🎁', description: 'Partilha com um amigo', reward: 30 },
-            { id: 4, title: 'Dizer obrigado 10 vezes', icon: '🙏', description: 'Usa palavras mágicas', reward: 25 },
-            { id: 5, title: 'Arrumar o quarto', icon: '🛏️', description: 'Mantém tudo organizado', reward: 35 },
-            { id: 6, title: 'Ler sobre dinheiro', icon: '📚', description: 'Aprende mais sobre finanças', reward: 45 },
-            { id: 7, title: 'Não comprar nada', icon: '🚫', description: 'Resiste à tentação de comprar', reward: 60 },
-            { id: 8, title: 'Fazer uma boa ação', icon: '❤️', description: 'Ajuda alguém sem pedir nada', reward: 50 },
-            { id: 9, title: 'Comparar preços', icon: '🏷️', description: 'Compara preços de 3 produtos', reward: 40 },
-            { id: 10, title: 'Ser educado sempre', icon: '😊', description: 'Usa boas maneiras o dia todo', reward: 30 }
-        ];
-        
-        // Tarefas domésticas
-        const CHORES = [
-            { id: 1, name: 'Arrumar a cama', coins: 5 },
-            { id: 2, name: 'Pôr a mesa', coins: 5 },
-            { id: 3, name: 'Arrumar brinquedos', coins: 10 },
-            { id: 4, name: 'Regar plantas', coins: 5 },
-            { id: 5, name: 'Ajudar a cozinhar', coins: 15 },
-            { id: 6, name: 'Limpar o quarto', coins: 20 },
-            { id: 7, name: 'Levar o lixo', coins: 10 },
-            { id: 8, name: 'Dobrar roupa', coins: 15 },
-            { id: 9, name: 'Lavar a loiça', coins: 20 }
-        ];
-        
-        // Componente principal
         function App() {
             const [screen, setScreen] = useState('avatar-selection');
             const [selectedAvatar, setSelectedAvatar] = useState(null);
             const [genderFilter, setGenderFilter] = useState('all');
-            const [coins, setCoins] = useState(0);
-            const [xp, setXp] = useState(0);
-            const [level, setLevel] = useState(1);
-            const [plantStage, setPlantStage] = useState(0);
-            const [completedLessons, setCompletedLessons] = useState([]);
-            const [completedChallenges, setCompletedChallenges] = useState([]);
-            const [currentLesson, setCurrentLesson] = useState(null);
-            const [currentQuestion, setCurrentQuestion] = useState(0);
-            const [selectedAnswer, setSelectedAnswer] = useState(null);
-            const [showFeedback, setShowFeedback] = useState(false);
-            const [userAge, setUserAge] = useState(6);
             
-            // Carregar dados do localStorage ao iniciar
-            useEffect(() => {
-                const savedData = localStorage.getItem('growup-kids-data');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    setSelectedAvatar(data.selectedAvatar);
-                    setCoins(data.coins || 0);
-                    setXp(data.xp || 0);
-                    setLevel(data.level || 1);
-                    setPlantStage(data.plantStage || 0);
-                    setCompletedLessons(data.completedLessons || []);
-                    setCompletedChallenges(data.completedChallenges || []);
-                    setUserAge(data.userAge || 6);
-                    if (data.selectedAvatar) {
-                        setScreen('dashboard');
-                    }
-                }
-            }, []);
-            
-            // Guardar dados no localStorage sempre que mudam
-            useEffect(() => {
-                if (selectedAvatar) {
-                    const data = {
-                        selectedAvatar,
-                        coins,
-                        xp,
-                        level,
-                        plantStage,
-                        completedLessons,
-                        completedChallenges,
-                        userAge
-                    };
-                    localStorage.setItem('growup-kids-data', JSON.stringify(data));
-                }
-            }, [selectedAvatar, coins, xp, level, plantStage, completedLessons, completedChallenges, userAge]);
-            
-            // Calcular XP necessário para próximo nível
-            const xpForNextLevel = level * 100;
-            const xpPercentage = (xp / xpForNextLevel) * 100;
-            
-            // Verificar se deve subir de nível
-            useEffect(() => {
-                if (xp >= xpForNextLevel) {
-                    setLevel(level + 1);
-                    setXp(xp - xpForNextLevel);
-                    setPlantStage(Math.min(plantStage + 1, 5));
-                    confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 }
-                    });
-                }
-            }, [xp]);
-            
-            // Emojis da planta por estágio
-            const plantEmojis = ['🌱', '🌿', '🪴', '🌳', '🌲', '🎄'];
-            
-            // Filtrar avatares por género
             const filteredAvatars = genderFilter === 'all' 
                 ? AVATARS 
                 : AVATARS.filter(a => a.gender === genderFilter);
             
-            // Selecionar avatar
             const handleAvatarSelect = (avatar) => {
                 setSelectedAvatar(avatar);
-            };
-            
-            // Confirmar seleção de avatar
-            const confirmAvatar = () => {
-                if (selectedAvatar) {
-                    setScreen('age-selection');
-                }
-            };
-            
-            // Confirmar idade
-            const confirmAge = (age) => {
-                setUserAge(age);
-                setScreen('dashboard');
-            };
-            
-            // Adicionar moedas e XP
-            const addReward = (coinAmount, xpAmount) => {
-                setCoins(coins + coinAmount);
-                setXp(xp + xpAmount);
-            };
-            
-            // Iniciar lição
-            const startLesson = (lesson) => {
-                setCurrentLesson(lesson);
-                setCurrentQuestion(0);
-                setSelectedAnswer(null);
-                setShowFeedback(false);
-                setScreen('quiz');
-            };
-            
-            // Responder pergunta
-            const answerQuestion = (answerIndex) => {
-                setSelectedAnswer(answerIndex);
-                setShowFeedback(true);
                 
-                const isCorrect = answerIndex === currentLesson.questions[currentQuestion].correct;
-                
-                if (isCorrect) {
-                    // Texto-para-fala: "Muito bem!"
-                    speak('Muito bem!');
-                    setTimeout(() => confetti({
-                        particleCount: 50,
-                        spread: 60,
-                        origin: { y: 0.7 }
-                    }), 100);
-                } else {
-                    speak('Tenta outra vez!');
-                }
-            };
-            
-            // Próxima pergunta ou completar lição
-            const nextQuestion = () => {
-                if (selectedAnswer === currentLesson.questions[currentQuestion].correct) {
-                    if (currentQuestion < currentLesson.questions.length - 1) {
-                        setCurrentQuestion(currentQuestion + 1);
-                        setSelectedAnswer(null);
-                        setShowFeedback(false);
-                    } else {
-                        // Lição completa
-                        if (!completedLessons.includes(currentLesson.id)) {
-                            setCompletedLessons([...completedLessons, currentLesson.id]);
-                            addReward(20, 50);
-                            confetti({
-                                particleCount: 100,
-                                spread: 70,
-                                origin: { y: 0.6 }
-                            });
-                        }
-                        setScreen('dashboard');
-                        setCurrentLesson(null);
-                    }
-                } else {
-                    setSelectedAnswer(null);
-                    setShowFeedback(false);
-                }
-            };
-            
-            // Completar desafio
-            const completeChallenge = (challenge) => {
-                if (!completedChallenges.includes(challenge.id)) {
-                    setCompletedChallenges([...completedChallenges, challenge.id]);
-                    addReward(challenge.reward, challenge.reward * 2);
-                    confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 }
-                    });
-                }
-            };
-            
-            // Completar tarefa doméstica
-            const completeChore = (chore) => {
-                addReward(chore.coins, chore.coins * 2);
+                // Confetti épico
                 confetti({
-                    particleCount: 50,
-                    spread: 60,
-                    origin: { y: 0.7 }
+                    particleCount: 100,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: [avatar.color, '#fff', '#ff00ff', '#00ffff'],
+                    shapes: ['circle', 'square'],
+                    gravity: 0.8,
+                    scalar: 1.2
+                });
+                
+                // Som (se disponível)
+                try {
+                    const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE=');
+                    audio.volume = 0.3;
+                    audio.play();
+                } catch(e) {}
+            };
+            
+            const confirmAvatar = () => {
+                if (!selectedAvatar) return;
+                
+                // Confetti MEGA
+                const duration = 3000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { 
+                    startVelocity: 30, 
+                    spread: 360, 
+                    ticks: 60, 
+                    zIndex: 0,
+                    colors: [selectedAvatar.color, '#fff', '#ff00ff', '#00ffff', '#ffd700']
+                };
+                
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+                
+                const interval = setInterval(function() {
+                    const timeLeft = animationEnd - Date.now();
+                    
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+                    
+                    const particleCount = 50 * (timeLeft / duration);
+                    
+                    confetti(Object.assign({}, defaults, { 
+                        particleCount, 
+                        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+                    }));
+                    confetti(Object.assign({}, defaults, { 
+                        particleCount, 
+                        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+                    }));
+                }, 250);
+                
+                // Animação GSAP
+                gsap.to('.glass-ultra', {
+                    scale: 0.8,
+                    opacity: 0,
+                    rotationY: 90,
+                    duration: 0.8,
+                    ease: 'power4.in',
+                    onComplete: () => {
+                        setScreen('coming-soon');
+                        gsap.fromTo('.glass-ultra', 
+                            { scale: 0.8, opacity: 0, rotationY: -90 },
+                            { scale: 1, opacity: 1, rotationY: 0, duration: 0.8, ease: 'power4.out' }
+                        );
+                    }
                 });
             };
             
-            // Texto-para-fala
-            const speak = (text) => {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'pt-PT';
-                    utterance.rate = 0.9; // Velocidade ajustada para crianças
-                    window.speechSynthesis.speak(utterance);
-                }
-            };
-            
-            // Ler lição em voz alta
-            const readLesson = () => {
-                if (currentLesson) {
-                    const question = currentLesson.questions[currentQuestion];
-                    speak(question.q);
-                }
-            };
-            
-            // Resetar progresso
-            const resetProgress = () => {
-                if (confirm('Tens a certeza que queres recomeçar? Vais perder todo o progresso!')) {
-                    localStorage.removeItem('growup-kids-data');
-                    window.location.reload();
-                }
-            };
-            
-            // Filtrar lições por idade
-            const availableLessons = [...FINANCE_LESSONS, ...SOCIAL_LESSONS].filter(l => l.age <= userAge);
-            
-            // Renderizar ecrã de seleção de avatar
             if (screen === 'avatar-selection') {
                 return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>🎓 GrowUp Kids</h1>
-                            <p>Escolhe o teu avatar para começar!</p>
-                        </div>
-                        
-                        <div className="card">
-                            <h2 style={{textAlign: 'center', marginBottom: '20px'}}>Seleciona o teu Personagem</h2>
+                    <div className="center-flex">
+                        <div className="glass-ultra" style={{maxWidth: '1400px', width: '95%', padding: '60px 40px'}}>
+                            <h1 className="mega-holo-title">🌌 GrowUp Kids</h1>
+                            <p className="super-glow-text">Escolhe o teu avatar e embarca numa aventura cósmica de aprendizagem!</p>
                             
-                            <div className="filter-buttons">
+                            <div className="neon-filters">
                                 <button 
-                                    className={`btn btn-secondary ${genderFilter === 'all' ? 'active' : ''}`}
+                                    className={`neon-btn ${genderFilter === 'all' ? 'active' : ''}`}
                                     onClick={() => setGenderFilter('all')}
                                 >
-                                    Todos
+                                    <span>✨ Todos</span>
                                 </button>
                                 <button 
-                                    className={`btn btn-secondary ${genderFilter === 'female' ? 'active' : ''}`}
+                                    className={`neon-btn ${genderFilter === 'female' ? 'active' : ''}`}
                                     onClick={() => setGenderFilter('female')}
                                 >
-                                    👧 Feminino
+                                    <span>👧 Feminino</span>
                                 </button>
                                 <button 
-                                    className={`btn btn-secondary ${genderFilter === 'male' ? 'active' : ''}`}
+                                    className={`neon-btn ${genderFilter === 'male' ? 'active' : ''}`}
                                     onClick={() => setGenderFilter('male')}
                                 >
-                                    👦 Masculino
+                                    <span>👦 Masculino</span>
                                 </button>
                             </div>
                             
-                            <div className="avatar-grid">
-                                {filteredAvatars.map(avatar => (
+                            <div className="fluid-grid">
+                                {filteredAvatars.map((avatar, index) => (
                                     <div 
                                         key={avatar.id}
-                                        className={`avatar-card ${selectedAvatar?.id === avatar.id ? 'selected' : ''}`}
+                                        className={`avatar-3d-extreme ${selectedAvatar?.id === avatar.id ? 'selected' : ''}`}
                                         onClick={() => handleAvatarSelect(avatar)}
+                                        style={{animationDelay: `${index * 0.1}s`}}
                                     >
-                                        <div className="avatar-icon">{avatar.icon}</div>
-                                        <div className="avatar-name">{avatar.name}</div>
-                                        <div className="avatar-trait">{avatar.trait}</div>
+                                        <div className="avatar-3d-inner">
+                                            <div className="avatar-face">
+                                                <div className="avatar-icon-mega">{avatar.icon}</div>
+                                                <div className="avatar-name-glow">{avatar.name}</div>
+                                                <div className="avatar-trait-text">{avatar.trait}</div>
+                                                
+                                                {/* Partículas orbitais */}
+                                                <div className="particle-ring">
+                                                    {[...Array(8)].map((_, i) => (
+                                                        <div 
+                                                            key={i} 
+                                                            className="particle-dot"
+                                                            style={{
+                                                                animationDelay: `${i * 0.375}s`,
+                                                                animationDuration: `${3 + i * 0.2}s`
+                                                            }}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
                             
                             {selectedAvatar && (
-                                <div style={{textAlign: 'center', marginTop: '30px'}}>
-                                    <button className="btn btn-primary" onClick={confirmAvatar}>
-                                        Confirmar e Continuar →
+                                <div style={{textAlign: 'center', marginTop: '50px'}}>
+                                    <button className="ultra-liquid-btn" onClick={confirmAvatar}>
+                                        <span>🚀 Iniciar Aventura</span>
                                     </button>
                                 </div>
                             )}
@@ -910,333 +963,26 @@
                 );
             }
             
-            // Renderizar ecrã de seleção de idade
-            if (screen === 'age-selection') {
+            if (screen === 'coming-soon') {
                 return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>🎂 Quantos anos tens?</h1>
-                            <p>Isto ajuda-nos a mostrar conteúdo adequado para ti!</p>
-                        </div>
-                        
-                        <div className="card">
-                            <div style={{display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap'}}>
-                                <button className="btn btn-primary" onClick={() => confirmAge(6)} style={{fontSize: '2em', padding: '30px 50px'}}>
-                                    6 anos
-                                </button>
-                                <button className="btn btn-primary" onClick={() => confirmAge(7)} style={{fontSize: '2em', padding: '30px 50px'}}>
-                                    7 anos
-                                </button>
-                                <button className="btn btn-primary" onClick={() => confirmAge(8)} style={{fontSize: '2em', padding: '30px 50px'}}>
-                                    8+ anos
-                                </button>
+                    <div className="center-flex">
+                        <div className="glass-ultra" style={{maxWidth: '900px', width: '90%', padding: '80px 50px', textAlign: 'center'}}>
+                            <h1 className="mega-holo-title" style={{marginBottom: '40px'}}>
+                                🎉 Avatar Selecionado!
+                            </h1>
+                            <div style={{fontSize: '8em', marginBottom: '30px'}}>
+                                {selectedAvatar?.icon}
                             </div>
-                        </div>
-                    </div>
-                );
-            }
-            
-            // Renderizar dashboard
-            if (screen === 'dashboard') {
-                return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>Olá, {selectedAvatar.name}! {selectedAvatar.icon}</h1>
-                            <p>Continua a aprender e a crescer!</p>
-                        </div>
-                        
-                        <div className="nav-menu">
-                            <button className="btn btn-primary nav-btn" onClick={() => setScreen('lessons')}>
-                                📚 Lições
-                            </button>
-                            <button className="btn btn-primary nav-btn" onClick={() => setScreen('challenges')}>
-                                🏆 Desafios
-                            </button>
-                            <button className="btn btn-primary nav-btn" onClick={() => setScreen('chores')}>
-                                🏠 Tarefas
-                            </button>
-                            <button className="btn btn-secondary nav-btn" onClick={resetProgress}>
-                                🔄 Recomeçar
-                            </button>
-                        </div>
-                        
-                        <div className="dashboard">
-                            <div>
-                                <div className="stats-panel">
-                                    <h2 style={{marginBottom: '20px', textAlign: 'center'}}>📊 As Tuas Estatísticas</h2>
-                                    
-                                    <div className="stat-item">
-                                        <span className="stat-label">💰 Moedas (GUC)</span>
-                                        <span className="stat-value">{coins}</span>
-                                    </div>
-                                    
-                                    <div className="stat-item">
-                                        <span className="stat-label">⭐ Nível</span>
-                                        <span className="stat-value">{level}</span>
-                                    </div>
-                                    
-                                    <div className="stat-item">
-                                        <span className="stat-label">📖 Lições Completas</span>
-                                        <span className="stat-value">{completedLessons.length}/50</span>
-                                    </div>
-                                    
-                                    <div className="stat-item">
-                                        <span className="stat-label">🏆 Desafios</span>
-                                        <span className="stat-value">{completedChallenges.length}/10</span>
-                                    </div>
-                                    
-                                    <div style={{marginTop: '20px'}}>
-                                        <div style={{textAlign: 'center', marginBottom: '10px', fontWeight: 'bold'}}>
-                                            Progresso para Nível {level + 1}
-                                        </div>
-                                        <div className="xp-bar">
-                                            <div className="xp-fill" style={{width: `${xpPercentage}%`}}>
-                                                {xp}/{xpForNextLevel} XP
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="plant-container">
-                                    <h3>🌱 A Tua Planta</h3>
-                                    <div className="plant">{plantEmojis[plantStage]}</div>
-                                    <p>Continua a aprender para ela crescer!</p>
-                                </div>
-                            </div>
-                            
-                            <div className="card">
-                                <h2>🎯 Próximas Lições</h2>
-                                <div className="lesson-list">
-                                    {availableLessons.slice(0, 5).map(lesson => (
-                                        <div 
-                                            key={lesson.id}
-                                            className={`lesson-card ${completedLessons.includes(lesson.id) ? 'completed' : ''}`}
-                                            onClick={() => !completedLessons.includes(lesson.id) && startLesson(lesson)}
-                                        >
-                                            <div className="lesson-title">
-                                                {completedLessons.includes(lesson.id) ? '✅ ' : ''}{lesson.title}
-                                            </div>
-                                            <div className="lesson-description">{lesson.description}</div>
-                                            <div>
-                                                <span className={`lesson-badge ${lesson.id <= 25 ? 'badge-finance' : 'badge-social'}`}>
-                                                    {lesson.id <= 25 ? '💰 Finanças' : '🤝 Convivência'}
-                                                </span>
-                                                <span className="lesson-badge badge-age">
-                                                    {lesson.age}+ anos
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div style={{textAlign: 'center', marginTop: '20px'}}>
-                                    <button className="btn btn-primary" onClick={() => setScreen('lessons')}>
-                                        Ver Todas as Lições →
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            
-            // Renderizar lista de lições
-            if (screen === 'lessons') {
-                return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>📚 Todas as Lições</h1>
-                            <p>Escolhe uma lição para aprender!</p>
-                        </div>
-                        
-                        <div style={{marginBottom: '20px'}}>
-                            <button className="btn btn-secondary" onClick={() => setScreen('dashboard')}>
-                                ← Voltar ao Dashboard
-                            </button>
-                        </div>
-                        
-                        <div className="card">
-                            <h2>💰 Literacia Financeira</h2>
-                            <div className="lesson-list">
-                                {FINANCE_LESSONS.filter(l => l.age <= userAge).map(lesson => (
-                                    <div 
-                                        key={lesson.id}
-                                        className={`lesson-card ${completedLessons.includes(lesson.id) ? 'completed' : ''}`}
-                                        onClick={() => !completedLessons.includes(lesson.id) && startLesson(lesson)}
-                                    >
-                                        <div className="lesson-title">
-                                            {completedLessons.includes(lesson.id) ? '✅ ' : ''}{lesson.title}
-                                        </div>
-                                        <div className="lesson-description">{lesson.description}</div>
-                                        <div>
-                                            <span className="lesson-badge badge-finance">💰 Finanças</span>
-                                            <span className="lesson-badge badge-age">{lesson.age}+ anos</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        
-                        <div className="card">
-                            <h2>🤝 Regras de Convivência</h2>
-                            <div className="lesson-list">
-                                {SOCIAL_LESSONS.filter(l => l.age <= userAge).map(lesson => (
-                                    <div 
-                                        key={lesson.id}
-                                        className={`lesson-card ${completedLessons.includes(lesson.id) ? 'completed' : ''}`}
-                                        onClick={() => !completedLessons.includes(lesson.id) && startLesson(lesson)}
-                                    >
-                                        <div className="lesson-title">
-                                            {completedLessons.includes(lesson.id) ? '✅ ' : ''}{lesson.title}
-                                        </div>
-                                        <div className="lesson-description">{lesson.description}</div>
-                                        <div>
-                                            <span className="lesson-badge badge-social">🤝 Convivência</span>
-                                            <span className="lesson-badge badge-age">{lesson.age}+ anos</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            
-            // Renderizar quiz
-            if (screen === 'quiz' && currentLesson) {
-                const question = currentLesson.questions[currentQuestion];
-                
-                return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>{currentLesson.title}</h1>
-                            <p>Pergunta {currentQuestion + 1} de {currentLesson.questions.length}</p>
-                        </div>
-                        
-                        <div className="quiz-container">
-                            <div className="question-card">
-                                <div className="question-text">{question.q}</div>
-                                
-                                <div className="tts-controls">
-                                    <button className="btn btn-secondary" onClick={readLesson}>
-                                        🔊 Ouvir Pergunta
-                                    </button>
-                                </div>
-                                
-                                <div className="answers-grid">
-                                    {question.answers.map((answer, index) => (
-                                        <button
-                                            key={index}
-                                            className={`answer-btn ${
-                                                showFeedback && index === question.correct ? 'correct' : ''
-                                            } ${
-                                                showFeedback && index === selectedAnswer && index !== question.correct ? 'incorrect' : ''
-                                            }`}
-                                            onClick={() => !showFeedback && answerQuestion(index)}
-                                            disabled={showFeedback}
-                                        >
-                                            {answer}
-                                        </button>
-                                    ))}
-                                </div>
-                                
-                                {showFeedback && (
-                                    <div>
-                                        <div className={`feedback-message ${
-                                            selectedAnswer === question.correct ? 'feedback-correct' : 'feedback-incorrect'
-                                        }`}>
-                                            {selectedAnswer === question.correct 
-                                                ? '🎉 Muito bem! Resposta correta!' 
-                                                : '❌ Ops! Tenta novamente!'}
-                                        </div>
-                                        
-                                        <div style={{textAlign: 'center', marginTop: '20px'}}>
-                                            <button className="btn btn-primary" onClick={nextQuestion}>
-                                                {selectedAnswer === question.correct 
-                                                    ? (currentQuestion < currentLesson.questions.length - 1 ? 'Próxima Pergunta →' : 'Completar Lição 🎉')
-                                                    : 'Tentar Novamente'}
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            
-            // Renderizar desafios
-            if (screen === 'challenges') {
-                return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>🏆 Desafios Semanais</h1>
-                            <p>Completa desafios para ganhar recompensas!</p>
-                        </div>
-                        
-                        <div style={{marginBottom: '20px'}}>
-                            <button className="btn btn-secondary" onClick={() => setScreen('dashboard')}>
-                                ← Voltar ao Dashboard
-                            </button>
-                        </div>
-                        
-                        <div className="card">
-                            <div className="challenge-grid">
-                                {CHALLENGES.map(challenge => (
-                                    <div 
-                                        key={challenge.id}
-                                        className="challenge-card"
-                                        onClick={() => completeChallenge(challenge)}
-                                        style={{
-                                            opacity: completedChallenges.includes(challenge.id) ? 0.5 : 1,
-                                            cursor: completedChallenges.includes(challenge.id) ? 'default' : 'pointer'
-                                        }}
-                                    >
-                                        <div className="challenge-icon">{challenge.icon}</div>
-                                        <div className="challenge-title">
-                                            {completedChallenges.includes(challenge.id) ? '✅ ' : ''}{challenge.title}
-                                        </div>
-                                        <p>{challenge.description}</p>
-                                        <p style={{marginTop: '10px', fontSize: '1.1em', fontWeight: 'bold'}}>
-                                            Recompensa: {challenge.reward} GUC
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            
-            // Renderizar tarefas domésticas
-            if (screen === 'chores') {
-                return (
-                    <div className="container">
-                        <div className="header">
-                            <h1>🏠 Tarefas Domésticas</h1>
-                            <p>Ajuda em casa e ganha moedas!</p>
-                        </div>
-                        
-                        <div style={{marginBottom: '20px'}}>
-                            <button className="btn btn-secondary" onClick={() => setScreen('dashboard')}>
-                                ← Voltar ao Dashboard
-                            </button>
-                        </div>
-                        
-                        <div className="card">
-                            <div className="lesson-list">
-                                {CHORES.map(chore => (
-                                    <div 
-                                        key={chore.id}
-                                        className="lesson-card"
-                                        onClick={() => completeChore(chore)}
-                                    >
-                                        <div className="lesson-title">{chore.name}</div>
-                                        <div className="lesson-description">
-                                            Clica para marcar como completa e ganhar {chore.coins} moedas!
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                            <h2 className="super-glow-text" style={{fontSize: '2.5em', marginBottom: '20px'}}>
+                                {selectedAvatar?.name}
+                            </h2>
+                            <p className="super-glow-text" style={{fontSize: '1.5em', marginBottom: '50px'}}>
+                                {selectedAvatar?.trait}
+                            </p>
+                            <p className="super-glow-text">
+                                🚀 A experiência completa está a ser construída!<br/>
+                                Esta é apenas uma prévia da interface surreal e interativa.
+                            </p>
                         </div>
                     </div>
                 );
@@ -1245,7 +991,6 @@
             return null;
         }
         
-        // Renderizar aplicação
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
