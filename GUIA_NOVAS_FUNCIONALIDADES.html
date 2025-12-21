@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowUp Kids v2.0 - Guia de Novas Funcionalidades</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #a855f7;
+        }
+        .feature {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+        }
+        .feature h3 {
+            margin-top: 0;
+        }
+        .example {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .step {
+            background: #f0f0f0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #764ba2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .emoji {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .todo {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GrowUp Kids v2.0 - Guia das Novas Funcionalidades</h1>
+        
+        <p>Este documento descreve todas as melhorias implementadas e como usá-las.</p>
+
+        <div class="success">
+            <h2 style="margin-top: 0; color: #155724;">✅ 5 Melhorias Principais Implementadas</h2>
+        </div>
+
+        <!-- 1. Controlo Parental -->
+        <div class="feature">
+            <h3><span class="emoji">👨‍👩‍👧</span>1. CONTROLO PARENTAL</h3>
+            <p>Os pais agora podem monitorizar o progresso completo da criança com um dashboard dedicado.</p>
+            
+            <h4>O que inclui:</h4>
+            <ul>
+                <li>📊 <strong>Estatísticas de Aprendizagem</strong>
+                    <ul>
+                        <li>Lições completas (X / 50)</li>
+                        <li>Percentagem de progresso total</li>
+                        <li>Desafios e tarefas realizadas</li>
+                    </ul>
+                </li>
+                <li>🎮 <strong>Economia do Jogo</strong>
+                    <ul>
+                        <li>Moedas acumuladas</li>
+                        <li>Itens comprados</li>
+                        <li>Vidas disponíveis</li>
+                    </ul>
+                </li>
+                <li>⚙️ <strong>Informações sobre Conteúdo</strong>
+                    <ul>
+                        <li>Faixa etária recomendada</li>
+                        <li>Tipos de lições</li>
+                        <li>Sistema de recompensas explicado</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Como usar:</h4>
+            <div class="step">
+                <strong>Passo 1:</strong> Encontra o botão "👨‍👩‍👧 Pais: OFF" no menu lateral esquerdo<br>
+                <strong>Passo 2:</strong> Clica no botão para ativar o modo dos pais<br>
+                <strong>Passo 3:</strong> Vê o dashboard completo com todas as estatísticas<br>
+                <strong>Passo 4:</strong> Clica em "🚪 Sair" para voltar ao modo criança
+            </div>
+        </div>
+
+        <!-- 2. Faixa Etária -->
+        <div class="feature">
+            <h3><span class="emoji">🎯</span>2. FAIXA ETÁRIA AJUSTADA (8-13 anos)</h3>
+            <p>O conteúdo foi revisado e adequado para crianças de <strong>8 a 13 anos</strong>.</p>
+            
+            <h4>Alterações:</h4>
+            <ul>
+                <li>✅ Idade mínima aumentada de 5 para <strong>8 anos</strong></li>
+                <li>✅ Idade máxima mantida em <strong>13 anos</strong></li>
+                <li>✅ Conteúdo mais apropriado para esta faixa etária</li>
+                <li>✅ Maior complexidade nas tarefas</li>
+            </ul>
+
+            <h4>Onde ver:</h4>
+            <div class="step">
+                Painel dos Pais → Informação sobre Conteúdo → "Faixa Etária Recomendada: 8-13 anos"
+            </div>
+        </div>
+
+        <!-- 3. Perguntas Melhoradas -->
+        <div class="feature">
+            <h3><span class="emoji">🧠</span>3. PERGUNTAS COM RACIOCÍNIO CRÍTICO</h3>
+            <p>As perguntas foram redesenhadas para estimular pensamento crítico e análise, em vez de memorização simples.</p>
+            
+            <h4>Exemplos de Melhorias:</h4>
+            
+            <h5>Exemplo 1: Análise de Custo-Benefício</h5>
+            <div class="example">
+                <strong>ANTES (Memorização):</strong><br>
+                P: "Antes de comprar devo?"<br>
+                R: "Pensar" / "Comprar logo" / "Fugir" / "Gritar"<br><br>
+                
+                <strong>DEPOIS (Raciocínio):</strong><br>
+                P: "Dois mochilas: Uma 50€ com 3 anos garantia, outra 30€ com 6 meses. Qual compras?"<br>
+                R: "30€ (barato)" / "50€ (dura mais)" / "Ambas igual" / "Nenhuma"
+            </div>
+
+            <h5>Exemplo 2: Qualidade vs Preço</h5>
+            <div class="example">
+                <strong>ANTES:</strong><br>
+                P: "Coisas caras custam?"<br>
+                R: "Pouco" / "Muito" / "Nada" / "Tudo"<br><br>
+                
+                <strong>DEPOIS:</strong><br>
+                P: "Caro sempre = melhor qualidade?"<br>
+                R: "Verdadeiro" / "Falso - qualidade > preço" / "Depende cor" / "Baratos sempre ruins"
+            </div>
+
+            <h4>Tipos de Raciocínio Estimulados:</h4>
+            <ul>
+                <li>✓ Análise de custo-benefício</li>
+                <li>✓ Comparação de produtos</li>
+                <li>✓ Identificação de valores reais vs aparentes</li>
+                <li>✓ Pensamento crítico sobre publicidade</li>
+                <li>✓ Planeamento e orçamentação</li>
+            </ul>
+        </div>
+
+        <!-- 4. Vidas -->
+        <div class="feature">
+            <h3><span class="emoji">❤️</span>4. SISTEMA DE VIDAS</h3>
+            <p>A criança começa com 3 vidas e perde uma com cada resposta incorreta.</p>
+            
+            <h4>Detalhes:</h4>
+            <table>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Detalhes</th>
+                </tr>
+                <tr>
+                    <td>Vidas Iniciais</td>
+                    <td>3 ❤️</td>
+                </tr>
+                <tr>
+                    <td>Perda de Vida</td>
+                    <td>-1 por resposta INCORRETA</td>
+                </tr>
+                <tr>
+                    <td>Onde Aparece</td>
+                    <td>Dashboard principal (❤️ Vidas)</td>
+                </tr>
+                <tr>
+                    <td>Recuperar Vidas</td>
+                    <td>Comprar "Escudo de Vidas" na loja (40🪙)</td>
+                </tr>
+                <tr>
+                    <td>Benefício</td>
+                    <td>Incentiva maior reflexão antes de responder</td>
+                </tr>
+            </table>
+
+            <h4>Como usar:</h4>
+            <div class="step">
+                <strong>Ver vidas:</strong> Dashboard principal, stats à esquerda (❤️ Vidas: 3)<br>
+                <strong>Perder vidas:</strong> Completa quizzes e erra respostas<br>
+                <strong>Recuperar vidas:</strong> Vai à Loja → Powerups → "Escudo de Vidas" (40 moedas)
+            </div>
+        </div>
+
+        <!-- 5. Loja -->
+        <div class="feature">
+            <h3><span class="emoji">🛍️</span>5. SISTEMA DE LOJA</h3>
+            <p>As moedas agora têm um propósito real! Compra itens especiais na loja.</p>
+            
+            <h4>Categorias de Itens (12 total):</h4>
+            
+            <h5>✨ Acessórios (3)</h5>
+            <div class="example">
+                🔸 Óculos Holográficos (50🪙) - Melhor visão do cosmos<br>
+                🔸 Chapéu Mágico (75🪙) - Aumenta criatividade<br>
+                🔸 Mochila Cósmica (100🪙) - Capacidade extra de conhecimento
+            </div>
+
+            <h5>📚 Conteúdo Educativo (3)</h5>
+            <div class="example">
+                🔸 Livro de Matemática Avançada (60🪙) - Novos desafios<br>
+                🔸 Guia de Ciências (70🪙) - Lições sobre o universo<br>
+                🔸 História do Planeta (80🪙) - Conhecimento do mundo
+            </div>
+
+            <h5>⚡ Powerups (3)</h5>
+            <div class="example">
+                🔸 Escudo de Vidas (40🪙) - Ganha +2 vidas<br>
+                🔸 Moeda Tripla (50🪙) - Próxima lição = 3x moedas<br>
+                🔸 Planta Brilhante (120🪙) - Planta evolui +25% XP
+            </div>
+
+            <h5>🎨 Temático (3 - estrutura pronta para futuro)</h5>
+            <div class="example">
+                🔸 Avatar Premium - Ninja (150🪙)<br>
+                🔸 Avatar Premium - Astronauta (150🪙)<br>
+                🔸 Tema Galaxia Neon (100🪙)
+            </div>
+
+            <h4>Como usar a Loja:</h4>
+            <div class="step">
+                <strong>Passo 1:</strong> Clica em "🛍️ Loja" no menu lateral<br>
+                <strong>Passo 2:</strong> Vê os items disponíveis<br>
+                <strong>Passo 3:</strong> Se tens moedas suficientes, clica em "Comprar"<br>
+                <strong>Passo 4:</strong> Celebração com confetti! Item fica marcado como "✓ Comprado"
+            </div>
+
+            <h4>Fluxo de Moedas:</h4>
+            <div class="example">
+                Completa Lição → +10🪙<br>
+                Completa Desafio → +Reward🪙<br>
+                Completa Tarefa → +Reward🪙<br>
+                ↓<br>
+                Acumula Moedas<br>
+                ↓<br>
+                Compra Items na Loja → -Preço🪙
+            </div>
+        </div>
+
+        <!-- Resumo -->
+        <div class="success">
+            <h2 style="margin-top: 0; color: #155724;">📊 Resumo das Mudanças</h2>
+            <table>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Antes</th>
+                    <th>Depois</th>
+                </tr>
+                <tr>
+                    <td>Faixa Etária</td>
+                    <td>5-13 anos</td>
+                    <td><strong>8-13 anos</strong></td>
+                </tr>
+                <tr>
+                    <td>Sistema de Vidas</td>
+                    <td>❌ Não</td>
+                    <td><strong>✅ Sim</strong></td>
+                </tr>
+                <tr>
+                    <td>Controlo Parental</td>
+                    <td>❌ Não</td>
+                    <td><strong>✅ Sim</strong></td>
+                </tr>
+                <tr>
+                    <td>Loja</td>
+                    <td>❌ Não</td>
+                    <td><strong>✅ Sim (12 items)</strong></td>
+                </tr>
+                <tr>
+                    <td>Perguntas Críticas</td>
+                    <td>Algumas</td>
+                    <td><strong>Maioria</strong></td>
+                </tr>
+                <tr>
+                    <td>Dashboards</td>
+                    <td>1 (criança)</td>
+                    <td><strong>2 (criança + pais)</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Dicas -->
+        <h2>💡 Dicas Úteis</h2>
+        <div class="step">
+            <strong>Para Pais:</strong><br>
+            - Ativa o modo dos pais regularmente para acompanhar o progresso<br>
+            - Nota o tipo de conteúdo nas diferentes categorias<br>
+            - Vê quantas vidas a criança tem e ajuda a recuperá-las<br>
+            - Estimula a criança a economizar moedas para a loja
+        </div>
+
+        <div class="step">
+            <strong>Para Crianças:</strong><br>
+            - Completa lições para ganhar moedas<br>
+            - Pensa bem antes de responder para não perder vidas<br>
+            - Acumula moedas para comprar items legais na loja<br>
+            - Tenta entender por que a resposta está certa, não apenas memorizar
+        </div>
+
+        <!-- Conclusão -->
+        <div class="success">
+            <h2 style="margin-top: 0; color: #155724;">🎉 Conclusão</h2>
+            <p>O GrowUp Kids foi significativamente melhorado com funcionalidades que tornam a aprendizagem mais:</p>
+            <ul>
+                <li>✅ <strong>Segura</strong> - Pais podem acompanhar tudo</li>
+                <li>✅ <strong>Apropriada</strong> - Conteúdo para 8-13 anos</li>
+                <li>✅ <strong>Inteligente</strong> - Perguntas que estimulam raciocínio</li>
+                <li>✅ <strong>Desafiante</strong> - Sistema de vidas adiciona tensão</li>
+                <li>✅ <strong>Recompensadora</strong> - Loja com itens significativos</li>
+            </ul>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px; color: #666; border-top: 2px solid #ddd; padding-top: 20px;">
+            <strong>GrowUp Kids v2.0</strong><br>
+            Melhorias implementadas em 21 de dezembro de 2025<br>
+            Desenvolvido com ❤️ para crianças aprender de forma divertida
+        </p>
+    </div>
+</body>
+</html>
